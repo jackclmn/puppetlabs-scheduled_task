@@ -319,7 +319,7 @@ module PuppetX::PuppetLabs::ScheduledTask
       task_folder = self.class.task_service.GetFolder(self.class.folder_path_from_task_path(task_path))
       task_user = nil
       task_password = nil
-      task.Definition.Settings.MultipleInstances = 'Parallel'
+      @definition.Settings.TASK_INSTANCES_POLICY = 'Parallel'
 
       case @definition.Principal.LogonType
       when TASK_LOGON_TYPE::TASK_LOGON_PASSWORD,
