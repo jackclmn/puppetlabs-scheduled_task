@@ -473,6 +473,8 @@ module PuppetX::PuppetLabs::ScheduledTask
     def enabled=(value)
       @definition.Settings.Enabled = value
       Puppet.debug("MultipleInstances: #{@definition.Settings.MultipleInstances}")
+      @definition.Settings.MultipleInstances = 0
+      Puppet.debug("MultipleInstances: #{@definition.Settings.MultipleInstances}")
     end
 
     # :stopdoc:
