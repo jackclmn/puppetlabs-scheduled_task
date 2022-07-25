@@ -319,7 +319,6 @@ module PuppetX::PuppetLabs::ScheduledTask
       task_folder = self.class.task_service.GetFolder(self.class.folder_path_from_task_path(task_path))
       task_user = nil
       task_password = nil
-      @definition.Settings.TASK_INSTANCES_POLICY = 'Parallel'
 
       case @definition.Principal.LogonType
       when TASK_LOGON_TYPE::TASK_LOGON_PASSWORD,
@@ -473,6 +472,7 @@ module PuppetX::PuppetLabs::ScheduledTask
     # Sets the enabled value
     def enabled=(value)
       @definition.Settings.Enabled = value
+      @definition.Settings.TASK_INSTANCES_POLICY = 'Parallel'
     end
 
     # :stopdoc:
