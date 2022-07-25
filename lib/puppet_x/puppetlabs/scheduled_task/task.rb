@@ -472,7 +472,8 @@ module PuppetX::PuppetLabs::ScheduledTask
     # Sets the enabled value
     def enabled=(value)
       @definition.Settings.Enabled = value
-      @definition.Settings.TASK_INSTANCES_POLICY = 'Parallel'
+      debug(@definition.Settings)
+      #@definition.Settings.TASK_INSTANCES_POLICY = 'Parallel'
     end
 
     # :stopdoc:
