@@ -381,4 +381,31 @@ describe 'Should create a scheduled task' do
     query_cmd = "schtasks.exe /query /v /fo list /tn #{taskname}"
     run_shell(query_cmd)
   end
+
+  it 'creates a task that will run in parallel: taskscheduler_api2', tier_high: true do
+    pp = <<-MANIFEST
+    scheduled_task {'#{taskname}':
+      ensure             => present,
+      compatibility      => 2,
+      multiple_instances => 0,
+      command            => 'c:\\\\windows\\\\system32\\\\notepad.exe',
+      arguments          => "foo bar baz",
+      working_dir        => 'c:\\\\windows',
+      trigger            => {
+        schedule            => daily,
+        start_time          => '12:00',
+        disable_time_zone_synchronization => true,
+      },
+      provider           => 'taskscheduler_api2'
+    }
+    MANIFEST
+    apply_manifest(pp, catch_failures: true)
+
+    # Ensure it's idempotent
+    apply_manifest(pp, catch_changes: true)
+
+    # Verify the task exists
+    query_cmd = "schtasks.exe /query /v /fo list /tn #{taskname}"
+    run_shell(query_cmd)
+  end
 end
