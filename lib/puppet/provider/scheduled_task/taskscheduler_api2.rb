@@ -36,8 +36,8 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
     task.enabled ? :true : :false
   end
 
-  def task_instances_policy
-    task.task_instances_policy
+  def multiple_instances
+    task.multiple_instances
   end
 
   def command
@@ -110,8 +110,8 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
     task.enabled = (value == :true)
   end
 
-  def task_instances_policy=(value)
-    task.task_instances_policy = value
+  def multiple_instances=(value)
+    task.multiple_instances = value
   end
 
   def compatibility=(value)
@@ -168,7 +168,7 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
     @task = PuppetX::PuppetLabs::ScheduledTask::Task.new(resource[:name])
     self.command = resource[:command]
 
-    [:arguments, :working_dir, :enabled, :trigger, :user, :compatibility, :task_instances_policy].each do |prop|
+    [:arguments, :working_dir, :enabled, :trigger, :user, :compatibility, :multiple_instances].each do |prop|
       send("#{prop}=", resource[prop]) if resource[prop]
     end
   end
