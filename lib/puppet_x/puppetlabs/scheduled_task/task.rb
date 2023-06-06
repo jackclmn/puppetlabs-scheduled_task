@@ -192,8 +192,8 @@ module PuppetX::PuppetLabs::ScheduledTask
       TASK_STATE_RUNNING    = 4
     end
 
-    # https://docs.microsoft.com/en-us/windows/win32/api/taskschd/ne-taskschd-task_instances_policy
-    class TASK_INSTANCES_POLICY
+    # https://docs.microsoft.com/en-us/windows/win32/api/taskschd/ne-taskschd-multiple_instances
+    class MULTIPLE_INSTANCES
       # Starts new instance while an existing instance is running.
       TASK_INSTANCES_PARALLEL       = 0
 
@@ -474,13 +474,13 @@ module PuppetX::PuppetLabs::ScheduledTask
       @definition.Settings.Enabled = value
     end
 
-    # Checks the task_instances_policy
-    def task_instances_policy
+    # Checks the multiple_instances
+    def multiple_instances
       @definition.Settings.MultipleInstances
     end
 
-    # Sets the task_instances_policy
-    def task_instances_policy=(value)
+    # Sets the multiple_instances
+    def multiple_instances=(value)
       @definition.Settings.MultipleInstances = value
     end
 

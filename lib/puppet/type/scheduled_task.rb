@@ -29,7 +29,7 @@ Puppet::Type.newtype(:scheduled_task) do
     defaultto(:true)
   end
 
-  newproperty(:task_instances_policy) do
+  newproperty(:multiple_instances) do
     desc "Defines how the Task Scheduler handles existing instances of the task 
       when it starts a new instance of the task. 0 starts new instance while an 
       existing instance is running. 1 Starts a new instance of the task after all 
