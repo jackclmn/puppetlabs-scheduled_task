@@ -12,6 +12,9 @@ Puppet::Type.newtype(:scheduled_task) do
   feature :compatibility, "The provider accepts compatibility to be
     set for the given task.",
           methods: [:compatibility, :compatibility=]
+  feature :task_instances_policy, "The provider accepts task_instances_policy to be
+    set for the given task.",
+          methods: [:task_instances_policy, :task_instances_policy=]
 
   ensurable
 

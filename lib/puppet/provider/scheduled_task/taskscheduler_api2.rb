@@ -12,6 +12,7 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
   confine    operatingsystem: :windows
 
   has_feature :compatibility
+  has_feature :task_instances_policy
 
   def self.instances
     task = PuppetX::PuppetLabs::ScheduledTask::Task
