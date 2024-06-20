@@ -12,6 +12,7 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
   confine    operatingsystem: :windows
 
   has_feature :compatibility
+  has_feature :task_instances_policy
 
   def self.instances
     task = PuppetX::PuppetLabs::ScheduledTask::Task
@@ -34,6 +35,10 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
 
   def enabled
     task.enabled ? :true : :false
+  end
+
+  def multiple_instances
+    task.multiple_instances
   end
 
   def command
@@ -106,6 +111,10 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
     task.enabled = (value == :true)
   end
 
+  def multiple_instances=(value)
+    task.multiple_instances = value
+  end
+
   def compatibility=(value)
     task.compatibility = value
   end
@@ -160,7 +169,7 @@ Puppet::Type.type(:scheduled_task).provide(:taskscheduler_api2) do
     @task = PuppetX::PuppetLabs::ScheduledTask::Task.new(resource[:name])
     self.command = resource[:command]
 
-    [:arguments, :working_dir, :enabled, :trigger, :user, :compatibility].each do |prop|
+    [:arguments, :working_dir, :enabled, :trigger, :user, :compatibility, :multiple_instances].each do |prop|
       send("#{prop}=", resource[prop]) if resource[prop]
     end
   end

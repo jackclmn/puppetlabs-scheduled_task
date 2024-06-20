@@ -12,6 +12,9 @@ Puppet::Type.newtype(:scheduled_task) do
   feature :compatibility, "The provider accepts compatibility to be
     set for the given task.",
           methods: [:compatibility, :compatibility=]
+  feature :task_instances_policy, "The provider accepts task_instances_policy to be
+    set for the given task.",
+          methods: [:task_instances_policy, :task_instances_policy=]
 
   ensurable
 
@@ -24,6 +27,29 @@ Puppet::Type.newtype(:scheduled_task) do
     newvalue(:false, event: :task_disabled)
 
     defaultto(:true)
+  end
+
+  newproperty(:multiple_instances) do
+    desc "Defines how the Task Scheduler handles existing instances of the task 
+      when it starts a new instance of the task. 0 starts new instance while an 
+      existing instance is running. 1 Starts a new instance of the task after all 
+      other instances of the task are complete. 2 Does not start a new instance 
+      if an existing instance of the task is running. 3 Stops an existing instance 
+      of the task before it starts a new instance. Defaults to 2."
+
+    newvalue(0)
+    newvalue(1)
+    newvalue(2)
+    newvalue(3)
+    defaultto(2)
+
+    validate do |value|
+      raise Puppet::Error, _('must be a number') unless value.is_a?(Integer)
+      super(value)
+    end
+
+    # override default munging of newvalue() to symbol, treating input as number
+    munge { |value| value }
   end
 
   newparam(:name) do
